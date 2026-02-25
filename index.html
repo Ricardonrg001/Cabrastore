@@ -66,7 +66,7 @@
 
         .info-producto { padding: 15px; flex-grow: 1; }
         .info-producto h3 { font-size: 16px; margin: 0 0 10px 0; color: #eee; }
-        .info-producto p { font-size: 18px; font-weight: bold; color: #00e386; margin: 10px 0; }
+        .info-producto p { font-size: 18px; font-weight: bold; color: #ffffff; margin: 10px 0; }
 
         .boton { 
             background: #0e386e; 
@@ -79,10 +79,10 @@
             width: 100%;
             transition: 0.3s;
         }
-        .boton:hover { background: #00e386; color: #000; }
+        .boton:hover { background: #7b8cd4; color: #000; }
 
         .btn-eliminar {
-            background: #ff4d4d;
+            background: #e93636;
             color: white;
             border: none;
             border-radius: 5px;
@@ -97,12 +97,12 @@
         /* BOTÓN FLOTANTE CARRITO */
         #btn-ver-carrito { 
             position: fixed; top: 20px; right: 20px; 
-            background: #008f5d; color: white; 
+            background: 0e386e; color: white; 
             display: none; z-index: 1000; width: auto; padding: 10px 20px;
         }
 
         /* VISTA CHECKOUT */
-        #vista-carrito { display: none; width: 100%; max-width: 500px; background: #1a1a1a; padding: 30px; border-radius: 20px; border: 1px solid #00e386; }
+        #vista-carrito { display: none; width: 100%; max-width: 500px; background: #1a1a1a; padding: 30px; border-radius: 20px; border: 1px solid #ffffff; }
         .item-pago { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #333; }
 
         /* RESPONSIVE PARA CELULAR */
@@ -148,18 +148,26 @@
     <div id="vista-carrito">
         <h1 style="font-size: 30px;">🛒 Tu Pedido</h1>
         <div id="lista-pago" style="margin-bottom: 20px;"></div>
-        <h2 style="text-align: right; color: #00e386; border-top: 1px solid #444; padding-top: 10px;">Total: <span id="total-final">$0</span></h2>
+        <h2 style="text-align: right; color: #ffffff; border-top: 1px solid #444; padding-top: 10px;">Total: <span id="total-final">$0</span></h2>
         <button class="boton" style="background:#00e386; color:#000; margin-bottom: 10px;" onclick="enviarPedido()">CONFIRMAR PEDIDO 🐐</button>
         <button class="boton" style="background:#333;" onclick="volver()">← Seguir Comprando</button>
     </div>
 
     <script>
         let carrito = [];
-
+             // Al cargar la página, la cabra revisa la "caja fuerte"
+            const guardado = localStorage.getItem('carrito_cabra');
+            if (guardado) {
+              carrito = JSON.parse(guardado);
+             document.getElementById('count').innerText = carrito.length;
+               document.getElementById('btn-ver-carrito').style.display = 'block';
+            }
         function añadir(nombre, precio) {
             carrito.push({ nombre, precio });
             document.getElementById('count').innerText = carrito.length;
             document.getElementById('btn-ver-carrito').style.display = 'block';
+            // LA CABRA GUARDA EL DATO AQUÍ:
+           localStorage.setItem('carrito_cabra', JSON.stringify(carrito));
         }
 
         function eliminarDelCarrito(index) {
@@ -171,6 +179,7 @@
             } else {
                 mostrarCarrito();
             }
+          localStorage.setItem('carrito_cabra', JSON.stringify(carrito));
         }
 
         function mostrarCarrito() {
@@ -210,6 +219,7 @@
                 alert("🐐 ¡Pedido enviado! La cabra se pondrá en contacto.");
                 carrito = [];
                 location.reload();
+                localStorage.removeItem('carrito_cabra');
             });
         }
     </script>
