@@ -22,18 +22,20 @@
         }
 
         .boton { 
-            background: #0e386e; /* El color azulado que eligió */
+            background: #0e386e; 
             color: white; 
             padding: 15px 30px; 
             text-decoration: none; 
             border-radius: 5px; 
             font-weight: bold; 
             transition: 0.3s;
+            border: none;
+            cursor: pointer;
         }
 
         .boton:hover {
-            background: #00e386; /* Cambia a verde al pasar el mouse */
-            transform: scale(1.05);
+            background: #2fb4f1; 
+            transform: scale(1.1); 
         }
 
         h1 {
@@ -41,44 +43,103 @@
             font-size: 50px;
             text-shadow: 2px 2px 10px rgba(0,227,134,0.5);
         }
-        .boton:hover {
-    background: #2fb4f1; /* Un verde más brillante */
-    transform: scale(1.1); /* Se agranda un poquito más */
-}
+
+        #panel-carrito li {
+            margin-bottom: 10px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 5px;
+        }
     </style>
 </head>
 <body>
-
-    <body>
 
     <h1>🐐 CabraStore</h1>
     <p>Tendencias adolescentes seleccionadas por la cabra.</p>
 
     <div style="display: flex; justify-content: center; padding: 20px;">
-        
         <div style="background: #252525; width: 300px; border-radius: 15px; overflow: hidden; border: 1px solid #00e386; box-shadow: 0 10px 20px rgba(0,0,0,0.5);">
-            
-            <img src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?auto=format&fit=crop&w=300&q=80" alt="Remera Aesthetic" style="width: 100%; height: 250px; object-fit: cover;">
-
+            <img src="https://img.kwcdn.com/product/open/4be679235719417294f6fe46ef786275-goods.jpeg" alt="Remera Streetwear" style="width: 100%; height: 350px; object-fit: cover;">
             <div style="padding: 20px;">
-                <h3 style="margin: 0; color: #00e386;">Remera Oversize "Ghost"</h3>
-                <p style="color: #ccc; font-size: 14px;">Estilo urbano, algodón premium. Disponible en varios talles.</p>
-                
+                <h3 style="margin: 0; color: #00e386;">Remera Streetwear Dark</h3>
+                <p style="color: #ccc; font-size: 14px;">Diseño exclusivo, algodón premium. El estilo que manda en la calle.</p>
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px;">
-                    <span style="font-size: 24px; font-weight: bold;">$15.99</span>
-                    
-                    <a href="https://wa.me/541166216695?text=Hola%20CabraStore!%20Quiero%20comprar%20la%20Remera%20Oversize%20Ghost" 
-                       target="_blank" 
-                       class="boton" 
-                       style="padding: 10px 15px; font-size: 14px;">
-                       Pedir por WhatsApp
-                    </a>
+                    <span style="font-size: 24px; font-weight: bold;">$18.50</span>
+                    <button onclick="añadirAlCarrito(1)" class="boton" style="padding: 10px 15px; font-size: 14px;">
+                        Añadir al Carrito
+                    </button>
                 </div>
             </div>
         </div>
-
     </div>
 
-</body>
+    <div id="panel-carrito" style="position: fixed; bottom: 20px; right: 20px; background: #252525; border: 2px solid #00e386; border-radius: 15px; padding: 20px; width: 300px; display: none; box-shadow: 0 10px 30px rgba(0,0,0,0.8); z-index: 1000;">
+        <h3 style="color: #00e386; margin-top: 0;">🛒 Tu Pedido</h3>
+        <ul id="lista-carrito" style="list-style: none; padding: 0; text-align: left; color: #ccc;"></ul>
+        <hr style="border: 0.5px solid #444;">
+        <p>Total: <span id="total-carrito" style="font-weight: bold; color: white;">$0</span></p>
+        <button onclick="finalizarPedido()" class="boton" style="width: 100%; background: #00e386; color: #1a1a1a;">
+            Confirmar Pedido
+        </button>
+    </div>
+
+    <script>
+        const productos = [
+            { id: 1, nombre: "Remera Streetwear Dark", precio: 18.50 }
+        ];
+
+        let carrito = [];
+
+        function añadirAlCarrito(id) {
+            const producto = productos.find(p => p.id === id);
+            carrito.push(producto);
+            actualizarInterfaz();
+        }
+
+        function actualizarInterfaz() {
+            const panel = document.getElementById('panel-carrito');
+            const lista = document.getElementById('lista-carrito');
+            const totalTxt = document.getElementById('total-carrito');
+            
+            if (carrito.length > 0) {
+                panel.style.display = 'block';
+                lista.innerHTML = '';
+                let total = 0;
+                
+                carrito.forEach((p) => {
+                    lista.innerHTML += `<li>${p.nombre} - $${p.precio}</li>`;
+                    total += p.precio;
+                });
+                
+                totalTxt.innerText = `$${total.toFixed(2)}`;
+            }
+        }
+
+       function finalizarPedido() {
+    if (carrito.length === 0) return;
+
+    const listaProductos = carrito.map(p => p.nombre).join(", ");
+    const totalPedido = document.getElementById('total-carrito').innerText;
+
+    // Esto envía los datos a su panel secreto en Formspree
+    fetch("https://formspree.io/f/xkovkvor", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            Tienda: "CabraStore 🐐",
+            Pedido: listaProductos,
+            Total: totalPedido
+        })
+    })
+    .then(response => {
+        if (response.ok) {
+            alert("🐐 ¡Pedido registrado en la base de datos de la Cabra!");
+            carrito = [];
+            document.getElementById('panel-carrito').style.display = 'none';
+        } else {
+            alert("Error al guardar el pedido.");
+        }
+    });
+}
+    </script>
 </body>
 </html>
