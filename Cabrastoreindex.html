@@ -11,12 +11,12 @@
         body { 
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
             text-align: center; 
-            background: #000000; 
+            background: #0f0f0f; 
             color: white; 
             margin: 0; 
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: center; /* ESTO LO DEJA EN EL MEDIO */
             align-items: center;
             min-height: 100vh;
             padding: 20px;
@@ -34,16 +34,10 @@
             gap: 15px;
         }
 
-        .logo-tienda {
-            width: 150px; 
-            height: auto;
-            border-radius: 10px;
-        }
-
         /* CONTENEDOR DE PRODUCTOS (5 COLUMNAS) */
         .contenedor-productos { 
             display: grid; 
-            grid-template-columns: repeat(5, 1fr); 
+            grid-template-columns: repeat(5, 1fr); /* 5 COLUMNAS FIJAS EN PC */
             gap: 15px; 
             width: 100%; 
             max-width: 1300px; 
@@ -80,20 +74,22 @@
             transition: 0.3s;
         }
         .boton:hover { background: #00e386; color: #000; }
+.btn-eliminar {
+    background: #ff4d4d; /* Rojo llamativo */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 2px 8px;
+    cursor: pointer;
+    margin-right: 10px;
+    font-weight: bold;
+    transition: 0.2s;
+}
 
-        .btn-eliminar {
-            background: #ff4d4d;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            padding: 2px 8px;
-            cursor: pointer;
-            margin-right: 10px;
-            font-weight: bold;
-            transition: 0.2s;
-        }
-        .btn-eliminar:hover { background: #ff0000; transform: scale(1.1); }
-
+.btn-eliminar:hover {
+    background: #ff0000; /* Rojo más intenso al pasar el mouse */
+    transform: scale(1.1); /* Crece un poquito */
+}
         /* BOTÓN FLOTANTE CARRITO */
         #btn-ver-carrito { 
             position: fixed; top: 20px; right: 20px; 
@@ -115,8 +111,8 @@
 
     <div id="vista-tienda">
         <div class="header-cabra">
-            <img src="logo.png" alt="Logo CabraStore" class="logo-tienda">
-            <h1>CabraStore</h1>
+            <h1><span>🐐</span> CabraStore</h1>
+            <p style="color: #888;">Tendencias seleccionadas por la cabra.</p>
         </div>
 
         <button id="btn-ver-carrito" class="boton" onclick="mostrarCarrito()">🛒 Ver Carrito (<span id="count">0</span>)</button>
@@ -161,18 +157,16 @@
             document.getElementById('count').innerText = carrito.length;
             document.getElementById('btn-ver-carrito').style.display = 'block';
         }
-
-        function eliminarDelCarrito(index) {
-            carrito.splice(index, 1);
-            document.getElementById('count').innerText = carrito.length;
-            if (carrito.length === 0) {
-                document.getElementById('btn-ver-carrito').style.display = 'none';
-                volver();
-            } else {
-                mostrarCarrito();
-            }
-        }
-
+function eliminarDelCarrito(index) {
+    carrito.splice(index, 1); // La cabra quita el producto
+    document.getElementById('count').innerText = carrito.length;
+    if (carrito.length === 0) {
+        document.getElementById('btn-ver-carrito').style.display = 'none';
+        volver();
+    } else {
+        mostrarCarrito(); // Refrescamos la lista
+    }
+}
         function mostrarCarrito() {
             document.getElementById('vista-tienda').style.display = 'none';
             document.getElementById('vista-carrito').style.display = 'block';
@@ -181,17 +175,16 @@
             contenedor.innerHTML = '';
             let total = 0;
             carrito.forEach((p, index) => {
-                contenedor.innerHTML += `
-                    <div class="item-pago">
-                        <span>
-                            <button class="btn-eliminar" onclick="eliminarDelCarrito(${index})">✕</button>
-                            ${p.nombre}
-                        </span>
-                        <span>$${p.precio.toFixed(2)}</span>
-                    </div>`;
-                total += p.precio;
-            });
-            totalTxt.innerText = `$${total.toFixed(2)}`;
+            contenedor.innerHTML += `
+                <div class="item-pago">
+                    <span>
+                        <button class="btn-eliminar" onclick="eliminarDelCarrito(${index})">✕</button>
+                        ${p.nombre}
+                    </span>
+                    <span>$${p.precio.toFixed(2)}</span>
+                </div>`;
+            total += p.precio;
+        });
         }
 
         function volver() {
