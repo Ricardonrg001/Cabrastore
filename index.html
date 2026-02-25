@@ -1,19 +1,24 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cabra Store - Premium</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐐</text></svg>">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐐</text></svg>">
     <style>
         /* RESET Y CENTRADO TOTAL */
-        * { box-sizing: border-box; }
-        body { 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            text-align: center; 
-            background: #000000; 
-            color: white; 
-            margin: 0; 
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+            background: #000000;
+            color: white;
+            margin: 0;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -23,63 +28,98 @@
         }
 
         /* HEADER */
-        .header-cabra { margin-bottom: 30px; }
-        .header-cabra h1 { 
-            color: #f1f0f7; 
-            font-size: 55px; 
-            margin: 0; 
-            display: flex; 
-            align-items: center; 
+        .header-cabra {
+            margin-bottom: 30px;
+        }
+
+        .header-cabra h1 {
+            color: #f1f0f7;
+            font-size: 55px;
+            margin: 0;
+            display: flex;
+            align-items: center;
             justify-content: center;
             gap: 15px;
         }
 
         .logo-tienda {
-            width: 150px; 
+            width: 150px;
             height: auto;
             border-radius: 10px;
         }
 
         /* CONTENEDOR DE PRODUCTOS (5 COLUMNAS) */
-        .contenedor-productos { 
-            display: grid; 
-            grid-template-columns: repeat(5, 1fr); 
-            gap: 15px; 
-            width: 100%; 
-            max-width: 1300px; 
+        .contenedor-productos {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 15px;
+            width: 100%;
+            max-width: 1300px;
         }
 
         /* TARJETA ESTILO TEMU */
-        .tarjeta-producto { 
-            background: #1a1a1a; 
-            border-radius: 12px; 
-            overflow: hidden; 
-            border: 1px solid #333; 
+        .tarjeta-producto {
+            background: #1a1a1a;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #333;
             transition: 0.3s;
             display: flex;
             flex-direction: column;
         }
-        .tarjeta-producto:hover { border-color: #ffffff; transform: translateY(-5px); }
 
-        .img-container { width: 100%; height: 250px; overflow: hidden; background: #222; }
-        .img-container img { width: 100%; height: 100%; object-fit: cover; }
+        .tarjeta-producto:hover {
+            border-color: #ffffff;
+            transform: translateY(-5px);
+        }
 
-        .info-producto { padding: 15px; flex-grow: 1; }
-        .info-producto h3 { font-size: 16px; margin: 0 0 10px 0; color: #eee; }
-        .info-producto p { font-size: 18px; font-weight: bold; color: #ffffff; margin: 10px 0; }
+        .img-container {
+            width: 100%;
+            height: 250px;
+            overflow: hidden;
+            background: #222;
+        }
 
-        .boton { 
-            background: #0e386e; 
-            color: white; 
-            padding: 12px; 
-            border-radius: 8px; 
-            font-weight: bold; 
-            border: none; 
-            cursor: pointer; 
+        .img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .info-producto {
+            padding: 15px;
+            flex-grow: 1;
+        }
+
+        .info-producto h3 {
+            font-size: 16px;
+            margin: 0 0 10px 0;
+            color: #eee;
+        }
+
+        .info-producto p {
+            font-size: 18px;
+            font-weight: bold;
+            color: #ffffff;
+            margin: 10px 0;
+        }
+
+        .boton {
+            background: #0e386e;
+            color: white;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
             width: 100%;
             transition: 0.3s;
         }
-        .boton:hover { background: #7b8cd4; color: #000; }
+
+        .boton:hover {
+            background: #7b8cd4;
+            color: #000;
+        }
 
         .btn-eliminar {
             background: #e93636;
@@ -92,25 +132,140 @@
             font-weight: bold;
             transition: 0.2s;
         }
-        .btn-eliminar:hover { background: #ff0000; transform: scale(1.1); }
+
+        .btn-eliminar:hover {
+            background: #ff0000;
+            transform: scale(1.1);
+        }
 
         /* BOTÓN FLOTANTE CARRITO */
-        #btn-ver-carrito { 
-            position: fixed; top: 20px; right: 20px; 
-            background: 0e386e; color: white; 
-            display: none; z-index: 1000; width: auto; padding: 10px 20px;
+        #btn-ver-carrito {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: 0e386e;
+            color: white;
+            display: none;
+            z-index: 1000;
+            width: auto;
+            padding: 10px 20px;
         }
 
         /* VISTA CHECKOUT */
-        #vista-carrito { display: none; width: 100%; max-width: 500px; background: #1a1a1a; padding: 30px; border-radius: 20px; border: 1px solid #ffffff; }
-        .item-pago { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #333; }
+        #vista-carrito {
+            display: none;
+            width: 100%;
+            max-width: 500px;
+            background: #1a1a1a;
+            padding: 30px;
+            border-radius: 20px;
+            border: 1px solid #ffffff;
+        }
+
+        .item-pago {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #333;
+        }
 
         /* RESPONSIVE PARA CELULAR */
         @media (max-width: 900px) {
-            .contenedor-productos { grid-template-columns: repeat(2, 1fr); }
+            .contenedor-productos {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* ESTILO PARA EL PIE DE PÁGINA */
+        .footer-cabra {
+            margin-top: 50px;
+            padding: 40px 20px;
+            width: 100%;
+            border-top: 1px solid #222;
+            background: #0a0a0a;
+            color: #666;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        .legal-text {
+            max-width: 600px;
+            margin: 15px auto 0 auto;
+            line-height: 1.6;
+            font-size: 12px;
+            color: #444;
+        }
+
+        /* ESTILO BOTÓN WHATSAPP */
+        .btn-wsp {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            bottom: 30px;
+            right: 30px;
+            background-color: #25d366;
+            color: #FFF;
+            border-radius: 50px;
+            text-align: center;
+            font-size: 35px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: transform 0.3s;
+        }
+
+        .btn-wsp:hover {
+            transform: scale(1.1);
+            /* Se agranda un poquito al pasar el mouse */
+        }
+
+        .btn-wsp img {
+            width: 35px;
+            height: 35px;
+        }
+
+        /* ESTILO DEL CARTELITO (TOOLTIP) */
+        .tooltip-wsp {
+            visibility: hidden;
+            width: 160px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 8px;
+            padding: 8px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            /* Aparece arriba del botón */
+            right: 0;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 14px;
+            font-weight: normal;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Flechita del cartelito */
+        .tooltip-wsp::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            right: 20px;
+            border-width: 8px;
+            border-style: solid;
+            border-color: #333 transparent transparent transparent;
+        }
+
+        /* Mostrar al pasar el mouse */
+        .btn-wsp:hover .tooltip-wsp {
+            visibility: visible;
+            opacity: 1;
         }
     </style>
 </head>
+
 <body>
 
     <div id="vista-tienda">
@@ -119,85 +274,132 @@
             <h1>CabraStore</h1>
         </div>
 
-        <button id="btn-ver-carrito" class="boton" onclick="mostrarCarrito()">🛒 Ver Carrito (<span id="count">0</span>)</button>
+        <button id="btn-ver-carrito" class="boton" onclick="mostrarCarrito()">🛒 Ver Carrito (<span
+                id="count">0</span>)</button>
 
         <div class="contenedor-productos">
             <div class="tarjeta-producto">
-                <div class="img-container"><img src="https://img.kwcdn.com/product/open/4be679235719417294f6fe46ef786275-goods.jpeg"></div>
-                <div class="info-producto"><h3>Street Dark</h3><p>$18.50</p><button onclick="añadir('Street Dark', 18.50)" class="boton">Añadir</button></div>
+                <div class="img-container"><img
+                        src="https://img.kwcdn.com/product/open/4be679235719417294f6fe46ef786275-goods.jpeg"></div>
+                <div class="info-producto">
+                    <h3>Street Dark</h3>
+                    <p>$18.50</p><button onclick="añadir('Street Dark', 18.50)" class="boton">Añadir</button>
+                </div>
             </div>
             <div class="tarjeta-producto">
-                <div class="img-container"><img src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=400"></div>
-                <div class="info-producto"><h3>Basic Black</h3><p>$15.00</p><button onclick="añadir('Basic Black', 15.00)" class="boton">Añadir</button></div>
+                <div class="img-container"><img
+                        src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=400"></div>
+                <div class="info-producto">
+                    <h3>Basic Black</h3>
+                    <p>$15.00</p><button onclick="añadir('Basic Black', 15.00)" class="boton">Añadir</button>
+                </div>
             </div>
             <div class="tarjeta-producto">
-                <div class="img-container"><img src="https://img.kwcdn.com/product/fancy/d393fbdf-ba41-4c68-8909-a49b6d707050.jpg?w=800"></div>
-                <div class="info-producto"><h3>Cyber Style</h3><p>$19.00</p><button onclick="añadir('Cyber Style', 19.00)" class="boton">Añadir</button></div>
+                <div class="img-container"><img
+                        src="https://img.kwcdn.com/product/fancy/d393fbdf-ba41-4c68-8909-a49b6d707050.jpg?w=800"></div>
+                <div class="info-producto">
+                    <h3>Cyber Style</h3>
+                    <p>$19.00</p><button onclick="añadir('Cyber Style', 19.00)" class="boton">Añadir</button>
+                </div>
             </div>
             <div class="tarjeta-producto">
                 <div class="img-container"><img src="https://via.placeholder.com/300x400/222/00e386?text=Cabra+4"></div>
-                <div class="info-producto"><h3>Próximamente</h3><p>$0.00</p><button onclick="añadir('Cabra 4', 0)" class="boton">Añadir</button></div>
+                <div class="info-producto">
+                    <h3>Próximamente</h3>
+                    <p>$0.00</p><button onclick="añadir('Cabra 4', 0)" class="boton">Añadir</button>
+                </div>
             </div>
             <div class="tarjeta-producto">
                 <div class="img-container"><img src="https://via.placeholder.com/300x400/222/00e386?text=Cabra+5"></div>
-                <div class="info-producto"><h3>Próximamente</h3><p>$0.00</p><button onclick="añadir('Cabra 5', 0)" class="boton">Añadir</button></div>
+                <div class="info-producto">
+                    <h3>Próximamente</h3>
+                    <p>$0.00</p><button onclick="añadir('Cabra 5', 0)" class="boton">Añadir</button>
+                </div>
+            </div>
+            <div class="tarjeta-producto">
+                <div class="img-container"><img src="https://via.placeholder.com/300x400/222/00e386?text=Cabra+4"></div>
+                <div class="info-producto">
+                    <h3>Próximamente</h3>
+                    <p>$0.00</p><button onclick="añadir('Cabra 4', 0)" class="boton">Añadir</button>
+                </div>
+            </div>
+            <div class="tarjeta-producto">
+                <div class="img-container"><img src="https://via.placeholder.com/300x400/222/00e386?text=Cabra+5"></div>
+                <div class="info-producto">
+                    <h3>Próximamente</h3>
+                    <p>$0.00</p><button onclick="añadir('Cabra 5', 0)" class="boton">Añadir</button>
+                </div>
+            </div>
+            <div class="tarjeta-producto">
+                <div class="img-container">
+                    <img src="LINK_DE_LA_IMAGEN">
+                </div>
+                <div class="info-producto">
+                    <h3>NOMBRE DEL PRODUCTO</h3>
+                    <p>$PRECIO.00</p>
+                    <button onclick="añadir('NOMBRE DEL PRODUCTO', PRECIO)" class="boton">Añadir</button>
+                </div>
             </div>
         </div>
+    </div>
+    </div>
     </div>
 
     <div id="vista-carrito">
         <h1 style="font-size: 30px;">🛒 Tu Pedido</h1>
         <div id="lista-pago" style="margin-bottom: 20px;"></div>
-        <h2 style="text-align: right; color: #ffffff; border-top: 1px solid #444; padding-top: 10px;">Total: <span id="total-final">$0</span></h2>
-        <button class="boton" style="background:#00e386; color:#000; margin-bottom: 10px;" onclick="enviarPedido()">CONFIRMAR PEDIDO 🐐</button>
+        <h2 style="text-align: right; color: #ffffff; border-top: 1px solid #444; padding-top: 10px;">Total: <span
+                id="total-final">$0</span></h2>
+        <button class="boton" style="background:#00e386; color:#000; margin-bottom: 10px;"
+            onclick="enviarPedido()">CONFIRMAR PEDIDO 🐐</button>
         <button class="boton" style="background:#333;" onclick="volver()">← Seguir Comprando</button>
     </div>
 
     <script>
-       let carrito = [];
+        let carrito = [];
 
-    // 1. LA CABRA REVISA LA CAJA FUERTE APENAS ENTRA
-    const guardado = localStorage.getItem('carrito_cabra');
-    if (guardado) {
-        carrito = JSON.parse(guardado);
-        document.getElementById('count').innerText = carrito.length;
-        if (carrito.length > 0) {
+        // 1. LA CABRA REVISA LA CAJA FUERTE APENAS ENTRA
+        const guardado = localStorage.getItem('carrito_cabra');
+        if (guardado) {
+            carrito = JSON.parse(guardado);
+            document.getElementById('count').innerText = carrito.length;
+            if (carrito.length > 0) {
+                document.getElementById('btn-ver-carrito').style.display = 'block';
+            }
+        }
+
+        function añadir(nombre, precio) {
+            carrito.push({ nombre, precio });
+            document.getElementById('count').innerText = carrito.length;
             document.getElementById('btn-ver-carrito').style.display = 'block';
+            // GUARDAR
+            localStorage.setItem('carrito_cabra', JSON.stringify(carrito));
         }
-    }
 
-    function añadir(nombre, precio) {
-        carrito.push({ nombre, precio });
-        document.getElementById('count').innerText = carrito.length;
-        document.getElementById('btn-ver-carrito').style.display = 'block';
-        // GUARDAR
-        localStorage.setItem('carrito_cabra', JSON.stringify(carrito));
-    }
+        function eliminarDelCarrito(index) {
+            carrito.splice(index, 1);
+            document.getElementById('count').innerText = carrito.length;
+            // ACTUALIZAR CAJA FUERTE AL BORRAR
+            localStorage.setItem('carrito_cabra', JSON.stringify(carrito));
 
-    function eliminarDelCarrito(index) {
-        carrito.splice(index, 1);
-        document.getElementById('count').innerText = carrito.length;
-        // ACTUALIZAR CAJA FUERTE AL BORRAR
-        localStorage.setItem('carrito_cabra', JSON.stringify(carrito));
-        
-        if (carrito.length === 0) {
-            document.getElementById('btn-ver-carrito').style.display = 'none';
-            localStorage.removeItem('carrito_cabra'); // Si no hay nada, vaciamos la caja
-            volver();
-        } else {
-            mostrarCarrito();
+            if (carrito.length === 0) {
+                document.getElementById('btn-ver-carrito').style.display = 'none';
+                localStorage.removeItem('carrito_cabra'); // Si no hay nada, vaciamos la caja
+                volver();
+            } else {
+                mostrarCarrito();
+            }
         }
-    }
 
-    function mostrarCarrito() {
-        document.getElementById('vista-tienda').style.display = 'none';
-        document.getElementById('vista-carrito').style.display = 'block';
-        const contenedor = document.getElementById('lista-pago');
-        const totalTxt = document.getElementById('total-final');
-        contenedor.innerHTML = '';
-        let total = 0;
-        carrito.forEach((p, index) => {
-            contenedor.innerHTML += `
+        function mostrarCarrito() {
+            document.getElementById('vista-tienda').style.display = 'none';
+            document.getElementById('vista-carrito').style.display = 'block';
+            const contenedor = document.getElementById('lista-pago');
+            const totalTxt = document.getElementById('total-final');
+            contenedor.innerHTML = '';
+            let total = 0;
+            carrito.forEach((p, index) => {
+                contenedor.innerHTML += `
                 <div class="item-pago">
                     <span>
                         <button class="btn-eliminar" onclick="eliminarDelCarrito(${index})">✕</button>
@@ -205,31 +407,69 @@
                     </span>
                     <span>$${p.precio.toFixed(2)}</span>
                 </div>`;
-            total += p.precio;
-        });
-        totalTxt.innerText = `$${total.toFixed(2)}`;
-    }
+                total += p.precio;
+            });
+            totalTxt.innerText = `$${total.toFixed(2)}`;
+        }
 
-    function volver() {
-        document.getElementById('vista-tienda').style.display = 'block';
-        document.getElementById('vista-carrito').style.display = 'none';
-    }
+        function volver() {
+            document.getElementById('vista-tienda').style.display = 'block';
+            document.getElementById('vista-carrito').style.display = 'none';
+        }
 
-    function enviarPedido() {
-        if (carrito.length === 0) return;
-        const pedidoText = carrito.map(p => p.nombre).join(", ");
-        const totalText = document.getElementById('total-final').innerText;
-        fetch("https://formspree.io/f/xkovkvor", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ Pedido: pedidoText, Total: totalText })
-        }).then(() => {
-            alert("🐐 ¡Pedido enviado! La cabra se pondrá en contacto.");
-            carrito = [];
-            localStorage.removeItem('carrito_cabra'); // LIMPIAR AL TERMINAR
-            location.reload();
-        });
-    }
+        function enviarPedido() {
+            if (carrito.length === 0) return;
+            const pedidoText = carrito.map(p => p.nombre).join(", ");
+            const totalText = document.getElementById('total-final').innerText;
+            fetch("https://formspree.io/f/xkovkvor", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ Pedido: pedidoText, Total: totalText })
+            }).then(() => {
+                alert("🐐 ¡Pedido enviado! La cabra se pondrá en contacto.");
+                carrito = [];
+                localStorage.removeItem('carrito_cabra'); // LIMPIAR AL TERMINAR
+                location.reload();
+            });
+        }
     </script>
+    <a href="https://wa.me/541166216695?text=Hola%20CabraStore!%20Tengo%20una%20consulta." class="btn-wsp"
+        target="_blank">
+        <span class="tooltip-wsp">¿Dudas? Escribinos 🐐</span>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
+    </a>
+    <footer class="footer-cabra">
+        <p>© 2026 CabraStore - Premium Trends</p>
+        <p class="legal-text">
+            CabraStore actúa como gestor de compras internacionales.
+            Al confirmar su pedido, procesamos la logística con proveedores globales
+            para garantizar la mejor calidad y tendencia en su puerta.
+        </p>
+        <div
+            style="background: #111; padding: 30px; border-radius: 15px; margin: 20px 0; max-width: 1300px; width: 100%;">
+            <h2 style="color: #fff; margin-bottom: 20px;">¿Por qué comprar en CabraStore? 🐐</h2>
+            <div style="display: flex; justify-content: space-around; flex-wrap: wrap; gap: 20px;">
+                <div style="max-width: 250px;">
+                    <p style="font-size: 24px;">🎯</p>
+                    <h4 style="margin: 5px 0;">Curaduría Pro</h4>
+                    <p style="font-size: 13px; color: #aaa;">Filtramos miles de productos para traerte solo lo que tiene
+                        calidad real.</p>
+                </div>
+                <div style="max-width: 250px;">
+                    <p style="font-size: 24px;">🛡️</p>
+                    <h4 style="margin: 5px 0;">Compra Segura</h4>
+                    <p style="font-size: 13px; color: #aaa;">Usamos nuestros métodos de pago internacionales para que no
+                        arriesgues tus datos.</p>
+                </div>
+                <div style="max-width: 250px;">
+                    <p style="font-size: 24px;">📲</p>
+                    <h4 style="margin: 5px 0;">Soporte Humano</h4>
+                    <p style="font-size: 13px; color: #aaa;">¿Dudas con la Aduana? Estamos con vos por WhatsApp en todo
+                        el proceso.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
 </body>
+
 </html>
