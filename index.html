@@ -154,74 +154,82 @@
     </div>
 
     <script>
-        let carrito = [];
-             // Al cargar la página, la cabra revisa la "caja fuerte"
-            const guardado = localStorage.getItem('carrito_cabra');
-            if (guardado) {
-              carrito = JSON.parse(guardado);
-             document.getElementById('count').innerText = carrito.length;
-               document.getElementById('btn-ver-carrito').style.display = 'block';
-            }
-        function añadir(nombre, precio) {
-            carrito.push({ nombre, precio });
-            document.getElementById('count').innerText = carrito.length;
+       let carrito = [];
+
+    // 1. LA CABRA REVISA LA CAJA FUERTE APENAS ENTRA
+    const guardado = localStorage.getItem('carrito_cabra');
+    if (guardado) {
+        carrito = JSON.parse(guardado);
+        document.getElementById('count').innerText = carrito.length;
+        if (carrito.length > 0) {
             document.getElementById('btn-ver-carrito').style.display = 'block';
-            // LA CABRA GUARDA EL DATO AQUÍ:
-           localStorage.setItem('carrito_cabra', JSON.stringify(carrito));
         }
+    }
 
-        function eliminarDelCarrito(index) {
-            carrito.splice(index, 1);
-            document.getElementById('count').innerText = carrito.length;
-            if (carrito.length === 0) {
-                document.getElementById('btn-ver-carrito').style.display = 'none';
-                volver();
-            } else {
-                mostrarCarrito();
-            }
-          localStorage.setItem('carrito_cabra', JSON.stringify(carrito));
-        }
+    function añadir(nombre, precio) {
+        carrito.push({ nombre, precio });
+        document.getElementById('count').innerText = carrito.length;
+        document.getElementById('btn-ver-carrito').style.display = 'block';
+        // GUARDAR
+        localStorage.setItem('carrito_cabra', JSON.stringify(carrito));
+    }
 
-        function mostrarCarrito() {
-            document.getElementById('vista-tienda').style.display = 'none';
-            document.getElementById('vista-carrito').style.display = 'block';
-            const contenedor = document.getElementById('lista-pago');
-            const totalTxt = document.getElementById('total-final');
-            contenedor.innerHTML = '';
-            let total = 0;
-            carrito.forEach((p, index) => {
-                contenedor.innerHTML += `
-                    <div class="item-pago">
-                        <span>
-                            <button class="btn-eliminar" onclick="eliminarDelCarrito(${index})">✕</button>
-                            ${p.nombre}
-                        </span>
-                        <span>$${p.precio.toFixed(2)}</span>
-                    </div>`;
-                total += p.precio;
-            });
-            totalTxt.innerText = `$${total.toFixed(2)}`;
+    function eliminarDelCarrito(index) {
+        carrito.splice(index, 1);
+        document.getElementById('count').innerText = carrito.length;
+        // ACTUALIZAR CAJA FUERTE AL BORRAR
+        localStorage.setItem('carrito_cabra', JSON.stringify(carrito));
+        
+        if (carrito.length === 0) {
+            document.getElementById('btn-ver-carrito').style.display = 'none';
+            localStorage.removeItem('carrito_cabra'); // Si no hay nada, vaciamos la caja
+            volver();
+        } else {
+            mostrarCarrito();
         }
+    }
 
-        function volver() {
-            document.getElementById('vista-tienda').style.display = 'block';
-            document.getElementById('vista-carrito').style.display = 'none';
-        }
+    function mostrarCarrito() {
+        document.getElementById('vista-tienda').style.display = 'none';
+        document.getElementById('vista-carrito').style.display = 'block';
+        const contenedor = document.getElementById('lista-pago');
+        const totalTxt = document.getElementById('total-final');
+        contenedor.innerHTML = '';
+        let total = 0;
+        carrito.forEach((p, index) => {
+            contenedor.innerHTML += `
+                <div class="item-pago">
+                    <span>
+                        <button class="btn-eliminar" onclick="eliminarDelCarrito(${index})">✕</button>
+                        ${p.nombre}
+                    </span>
+                    <span>$${p.precio.toFixed(2)}</span>
+                </div>`;
+            total += p.precio;
+        });
+        totalTxt.innerText = `$${total.toFixed(2)}`;
+    }
 
-        function enviarPedido() {
-            const pedidoText = carrito.map(p => p.nombre).join(", ");
-            const totalText = document.getElementById('total-final').innerText;
-            fetch("https://formspree.io/f/xkovkvor", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ Pedido: pedidoText, Total: totalText })
-            }).then(() => {
-                alert("🐐 ¡Pedido enviado! La cabra se pondrá en contacto.");
-                carrito = [];
-                location.reload();
-                localStorage.removeItem('carrito_cabra');
-            });
-        }
+    function volver() {
+        document.getElementById('vista-tienda').style.display = 'block';
+        document.getElementById('vista-carrito').style.display = 'none';
+    }
+
+    function enviarPedido() {
+        if (carrito.length === 0) return;
+        const pedidoText = carrito.map(p => p.nombre).join(", ");
+        const totalText = document.getElementById('total-final').innerText;
+        fetch("https://formspree.io/f/xkovkvor", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ Pedido: pedidoText, Total: totalText })
+        }).then(() => {
+            alert("🐐 ¡Pedido enviado! La cabra se pondrá en contacto.");
+            carrito = [];
+            localStorage.removeItem('carrito_cabra'); // LIMPIAR AL TERMINAR
+            location.reload();
+        });
+    }
     </script>
 </body>
 </html>
