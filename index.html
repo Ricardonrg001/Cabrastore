@@ -8,7 +8,31 @@
     <link rel="icon"
         href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐐</text></svg>">
     <style>
-        /* RESET Y CENTRADO TOTAL */
+        header {
+            transition: all 0.4s ease;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            background-color: #000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #ffffff;
+        }
+
+        header.retraido {
+            padding: 10px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+        }
+
+        header.retraido h1 {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+
         * {
             box-sizing: border-box;
         }
@@ -21,25 +45,13 @@
             margin: 0;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
             min-height: 100vh;
-            padding: 20px;
+            padding-top: 150px;
         }
 
-        /* HEADER */
         .header-cabra {
             margin-bottom: 30px;
-        }
-
-        .header-cabra h1 {
-            color: #f1f0f7;
-            font-size: 55px;
-            margin: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
         }
 
         .logo-tienda {
@@ -48,7 +60,6 @@
             border-radius: 10px;
         }
 
-        /* CONTENEDOR DE PRODUCTOS (5 COLUMNAS) */
         .contenedor-productos {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
@@ -57,7 +68,6 @@
             max-width: 1300px;
         }
 
-        /* TARJETA ESTILO TEMU */
         .tarjeta-producto {
             background: #1a1a1a;
             border-radius: 12px;
@@ -75,7 +85,7 @@
 
         .img-container {
             width: 100%;
-            height: 250px;
+            height: 200px;
             overflow: hidden;
             background: #222;
         }
@@ -138,20 +148,26 @@
             transform: scale(1.1);
         }
 
-        /* BOTÓN FLOTANTE CARRITO */
         #btn-ver-carrito {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: 0e386e;
-            color: white;
-            display: none;
-            z-index: 1000;
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
             width: auto;
-            padding: 10px 20px;
+            background: #0e386e;
+            color: white;
+            padding: 20px 15px;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: all 0.4s ease;
         }
 
-        /* VISTA CHECKOUT */
+        header.retraido #btn-ver-carrito {
+            padding: 10px 10px;
+            font-size: 12px;
+            top: 50%;
+        }
+
         #vista-carrito {
             display: none;
             width: 100%;
@@ -169,14 +185,12 @@
             border-bottom: 1px solid #333;
         }
 
-        /* RESPONSIVE PARA CELULAR */
         @media (max-width: 900px) {
             .contenedor-productos {
                 grid-template-columns: repeat(2, 1fr);
             }
         }
 
-        /* ESTILO PARA EL PIE DE PÁGINA */
         .footer-cabra {
             margin-top: 50px;
             padding: 40px 20px;
@@ -196,7 +210,6 @@
             color: #444;
         }
 
-        /* ESTILO BOTÓN WHATSAPP */
         .btn-wsp {
             position: fixed;
             width: 60px;
@@ -206,27 +219,16 @@
             background-color: #25d366;
             color: #FFF;
             border-radius: 50px;
-            text-align: center;
-            font-size: 35px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
-            z-index: 1000;
             display: flex;
             justify-content: center;
             align-items: center;
+            z-index: 1000;
             transition: transform 0.3s;
         }
 
-        .btn-wsp:hover {
-            transform: scale(1.1);
-            /* Se agranda un poquito al pasar el mouse */
-        }
+        .btn-wsp:hover { transform: scale(1.1); }
+        .btn-wsp img { width: 35px; height: 35px; }
 
-        .btn-wsp img {
-            width: 35px;
-            height: 35px;
-        }
-
-        /* ESTILO DEL CARTELITO (TOOLTIP) */
         .tooltip-wsp {
             visibility: hidden;
             width: 160px;
@@ -236,180 +238,225 @@
             border-radius: 8px;
             padding: 8px;
             position: absolute;
-            z-index: 1;
             bottom: 125%;
-            /* Aparece arriba del botón */
             right: 0;
             opacity: 0;
             transition: opacity 0.3s;
             font-size: 14px;
-            font-weight: normal;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
         }
 
-        /* Flechita del cartelito */
-        .tooltip-wsp::after {
-            content: "";
-            position: absolute;
-            top: 100%;
-            right: 20px;
-            border-width: 8px;
-            border-style: solid;
-            border-color: #333 transparent transparent transparent;
+        .btn-wsp:hover .tooltip-wsp { visibility: visible; opacity: 1; }
+
+        .flying-img {
+            position: fixed;
+            z-index: 5000;
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 10px;
+            transition: all 0.8s ease-in-out;
+            pointer-events: none;
         }
 
-        /* Mostrar al pasar el mouse */
-        .btn-wsp:hover .tooltip-wsp {
-            visibility: visible;
-            opacity: 1;
+        /* Estilos nuevos para inputs de tarjeta */
+        .metodo-pago-box {
+            background: #111;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: left;
         }
     </style>
 </head>
 
 <body>
+    <header id="miHeader">
+        <h1 style="color: white; letter-spacing: 3px; transition: 0.4s;">CABRA STORE</h1>
+        <nav style="display: flex; gap: 20px;">
+            <a href="#inicio" style="color: white; text-decoration: none; font-size: 12px; font-weight: bold;">INICIO</a>
+            <a href="#productos" style="color: white; text-decoration: none; font-size: 12px; font-weight: bold;">PRODUCTOS</a>
+            <a href="#como-funciona" style="color: #ff3e3e; text-decoration: none; font-size: 12px; font-weight: bold;">¿CÓMO FUNCIONA?</a>
+        </nav>
+        <button id="btn-ver-carrito" class="boton" onclick="mostrarCarrito()">🛒 Ver Carrito (<span id="count">0</span>)</button>
+    </header>
 
     <div id="vista-tienda">
         <div class="header-cabra">
             <img src="logo.png" alt="Logo CabraStore" class="logo-tienda">
-            <h1>CabraStore</h1>
         </div>
-
-        <button id="btn-ver-carrito" class="boton" onclick="mostrarCarrito()">🛒 Ver Carrito (<span
-                id="count">0</span>)</button>
-
         <div class="contenedor-productos">
             <div class="tarjeta-producto">
-                <div class="img-container"><img
-                        src="https://img.kwcdn.com/product/open/4be679235719417294f6fe46ef786275-goods.jpeg"></div>
+                <div class="img-container"><img src="https://img.kwcdn.com/product/open/4be679235719417294f6fe46ef786275-goods.jpeg"></div>
                 <div class="info-producto">
                     <h3>Street Dark</h3>
-                    <p>$18.50</p><button onclick="añadir('Street Dark', 18.50)" class="boton">Añadir</button>
+                    <p>$18.50</p> 
+                    <button onclick="añadir('Street Dark', 18.50, 'https://img.kwcdn.com/product/open/4be679235719417294f6fe46ef786275-goods.jpeg', this)" class="boton">Añadir</button>
                 </div>
             </div>
             <div class="tarjeta-producto">
-                <div class="img-container"><img
-                        src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=400"></div>
+                <div class="img-container"><img src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=400"></div>
                 <div class="info-producto">
                     <h3>Basic Black</h3>
-                    <p>$15.00</p><button onclick="añadir('Basic Black', 15.00)" class="boton">Añadir</button>
+                    <p>$15.00</p> 
+                    <button onclick="añadir('Basic Black', 15.00, 'https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=400', this)" class="boton">Añadir</button>
                 </div>
             </div>
             <div class="tarjeta-producto">
-                <div class="img-container"><img
-                        src="https://img.kwcdn.com/product/fancy/d393fbdf-ba41-4c68-8909-a49b6d707050.jpg?w=800"></div>
+                <div class="img-container"><img src="https://img.kwcdn.com/product/fancy/d393fbdf-ba41-4c68-8909-a49b6d707050.jpg?w=800"></div>
                 <div class="info-producto">
                     <h3>Cyber Style</h3>
-                    <p>$19.00</p><button onclick="añadir('Cyber Style', 19.00)" class="boton">Añadir</button>
-                </div>
-            </div>
-            <div class="tarjeta-producto">
-                <div class="img-container"><img src="https://via.placeholder.com/300x400/222/00e386?text=Cabra+4"></div>
-                <div class="info-producto">
-                    <h3>Próximamente</h3>
-                    <p>$0.00</p><button onclick="añadir('Cabra 4', 0)" class="boton">Añadir</button>
-                </div>
-            </div>
-            <div class="tarjeta-producto">
-                <div class="img-container"><img src="https://via.placeholder.com/300x400/222/00e386?text=Cabra+5"></div>
-                <div class="info-producto">
-                    <h3>Próximamente</h3>
-                    <p>$0.00</p><button onclick="añadir('Cabra 5', 0)" class="boton">Añadir</button>
-                </div>
-            </div>
-            <div class="tarjeta-producto">
-                <div class="img-container"><img src="https://via.placeholder.com/300x400/222/00e386?text=Cabra+4"></div>
-                <div class="info-producto">
-                    <h3>Próximamente</h3>
-                    <p>$0.00</p><button onclick="añadir('Cabra 4', 0)" class="boton">Añadir</button>
-                </div>
-            </div>
-            <div class="tarjeta-producto">
-                <div class="img-container"><img src="https://via.placeholder.com/300x400/222/00e386?text=Cabra+5"></div>
-                <div class="info-producto">
-                    <h3>Próximamente</h3>
-                    <p>$0.00</p><button onclick="añadir('Cabra 5', 0)" class="boton">Añadir</button>
-                </div>
-            </div>
-            <div class="tarjeta-producto">
-                <div class="img-container">
-                    <img src="LINK_DE_LA_IMAGEN">
-                </div>
-                <div class="info-producto">
-                    <h3>NOMBRE DEL PRODUCTO</h3>
-                    <p>$PRECIO.00</p>
-                    <button onclick="añadir('NOMBRE DEL PRODUCTO', PRECIO)" class="boton">Añadir</button>
+                    <p>$19.00</p>
+                    <button onclick="añadir('Cyber Style', 19.00, 'https://img.kwcdn.com/product/fancy/d393fbdf-ba41-4c68-8909-a49b6d707050.jpg?w=800', this)" class="boton">Añadir</button>
                 </div>
             </div>
         </div>
-    </div>
-    </div>
     </div>
 
     <div id="vista-carrito">
         <h1 style="font-size: 30px;">🛒 Tu Pedido</h1>
-        <div id="lista-pago" style="margin-bottom: 20px;"></div>
-        <h2 style="text-align: right; color: #ffffff; border-top: 1px solid #444; padding-top: 10px;">Total: <span
-                id="total-final">$0</span></h2>
-        <button class="boton" style="background:#00e386; color:#000; margin-bottom: 10px;"
-            onclick="enviarPedido()">CONFIRMAR PEDIDO 🐐</button>
-        <button class="boton" style="background:#333;" onclick="volver()">← Seguir Comprando</button>
+        
+        <div id="seccion-productos">
+            <div id="lista-pago" style="margin-bottom: 20px;"></div>
+            <h2 style="text-align: right; color: #ffffff; border-top: 1px solid #444; padding-top: 10px;">Total: <span id="total-final">$0</span></h2>
+            <button class="boton" style="background:#00e386; color:#000; margin-bottom: 10px;" onclick="irADatosEnvio()">CONFIRMAR PRODUCTOS 🚀</button>
+        </div>
+
+        <div id="seccion-datos" style="display: none; background: #111; padding: 20px; border-radius: 10px; margin-bottom: 20px; text-align: left;">
+            <h3 style="margin-top: 0; color: #00e386;">Datos de Entrega 🐐</h3>
+            <input type="text" id="nombre-cliente" placeholder="Nombre completo" style="width: 100%; padding: 10px; margin-bottom: 10px; background: #222; color: white; border: 1px solid #444; border-radius: 5px;">
+            <input type="text" id="direccion-cliente" placeholder="Dirección de envío" style="width: 100%; padding: 10px; margin-bottom: 10px; background: #222; color: white; border: 1px solid #444; border-radius: 5px;">
+            <input type="text" id="localidad-cliente" placeholder="Localidad / Ciudad" style="width: 100%; padding: 10px; background: #222; color: white; border: 1px solid #444; border-radius: 5px;">
+            <button class="boton" style="background:#00e386; color:#000; margin-top: 15px;" onclick="irAPago()">SIGUIENTE: MÉTODO DE PAGO 💳</button>
+        </div>
+
+        <div id="seccion-pago" style="display: none;">
+            <div class="metodo-pago-box">
+                <h3 style="margin-top: 0; color: #00e386;">Método de Pago 💳</h3>
+                <p style="font-size: 13px; color: #888;">Elegí cómo querés pagar tu pedido:</p>
+                
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; margin-bottom: 10px; font-weight: bold;">
+                        <input type="radio" name="pago" value="Tarjeta" checked onclick="togglePago('tarjeta')"> Pago con Tarjeta
+                    </label>
+                    <div id="campos-tarjeta">
+                        <input type="text" id="nro-tarjeta" placeholder="Número de tarjeta" style="width: 100%; padding: 10px; margin-bottom: 10px; background: #222; color: white; border: 1px solid #444; border-radius: 5px;">
+                        <div style="display: flex; gap: 10px;">
+                            <input type="text" id="venc-tarjeta" placeholder="MM/AA" style="width: 50%; padding: 10px; background: #222; color: white; border: 1px solid #444; border-radius: 5px;">
+                            <input type="text" id="cvv-tarjeta" placeholder="CVV" style="width: 50%; padding: 10px; background: #222; color: white; border: 1px solid #444; border-radius: 5px;">
+                        </div>
+                    </div>
+                </div>
+
+                <hr style="border: 0; border-top: 1px solid #333; margin: 20px 0;">
+
+                <div>
+                    <label style="display: block; margin-bottom: 10px; font-weight: bold;">
+                        <input type="radio" name="pago" value="Transferencia" onclick="togglePago('transferencia')"> Transferencia / Alias
+                    </label>
+                    <div id="campos-alias" style="display: none; background: #222; padding: 15px; border-radius: 5px; border: 1px dashed #00e386;">
+                        <p style="margin: 0; font-size: 14px;">Alias: <strong>ricardo.noriega.mp</strong></p>
+                        <p style="margin: 5px 0 0 0; font-size: 12px; color: #aaa;">Enviá el comprobante por WhatsApp una vez finalizado.</p>
+                    </div>
+                </div>
+            </div>
+            <button class="boton" style="background:#00e386; color:#000; margin-bottom: 10px;" onclick="enviarPedido()">FINALIZAR COMPRA 🐐</button>
+        </div>
+
+        <button id="btn-volver-tienda" class="boton" style="background:#333;" onclick="volver()">← Volver</button>
     </div>
 
     <script>
         let carrito = [];
 
-        // 1. LA CABRA REVISA LA CAJA FUERTE APENAS ENTRA
         const guardado = localStorage.getItem('carrito_cabra');
         if (guardado) {
             carrito = JSON.parse(guardado);
             document.getElementById('count').innerText = carrito.length;
-            if (carrito.length > 0) {
-                document.getElementById('btn-ver-carrito').style.display = 'block';
-            }
         }
 
-        function añadir(nombre, precio) {
+        function añadir(nombre, precio, imagenSrc, elementoBoton) {
             carrito.push({ nombre, precio });
             document.getElementById('count').innerText = carrito.length;
-            document.getElementById('btn-ver-carrito').style.display = 'block';
-            // GUARDAR
             localStorage.setItem('carrito_cabra', JSON.stringify(carrito));
+
+            if (imagenSrc && elementoBoton) {
+                const rect = elementoBoton.parentElement.parentElement.querySelector('.img-container img').getBoundingClientRect();
+                const flyingImg = document.createElement('img');
+                flyingImg.src = imagenSrc;
+                flyingImg.className = 'flying-img';
+                flyingImg.style.left = rect.left + 'px';
+                flyingImg.style.top = rect.top + 'px';
+                document.body.appendChild(flyingImg);
+
+                const carritoBtn = document.getElementById('btn-ver-carrito');
+                const carritoRect = carritoBtn.getBoundingClientRect();
+
+                setTimeout(() => {
+                    flyingImg.style.left = carritoRect.left + 'px';
+                    flyingImg.style.top = carritoRect.top + 'px';
+                    flyingImg.style.width = '20px';
+                    flyingImg.style.height = '20px';
+                    flyingImg.style.opacity = '0';
+                }, 50);
+                setTimeout(() => { flyingImg.remove(); }, 800);
+            }
         }
 
         function eliminarDelCarrito(index) {
             carrito.splice(index, 1);
             document.getElementById('count').innerText = carrito.length;
-            // ACTUALIZAR CAJA FUERTE AL BORRAR
             localStorage.setItem('carrito_cabra', JSON.stringify(carrito));
-
-            if (carrito.length === 0) {
-                document.getElementById('btn-ver-carrito').style.display = 'none';
-                localStorage.removeItem('carrito_cabra'); // Si no hay nada, vaciamos la caja
-                volver();
-            } else {
-                mostrarCarrito();
-            }
+            if (carrito.length === 0) volver();
+            else mostrarCarrito();
         }
 
         function mostrarCarrito() {
             document.getElementById('vista-tienda').style.display = 'none';
             document.getElementById('vista-carrito').style.display = 'block';
+            
+            // Resetear a paso 1
+            document.getElementById('seccion-productos').style.display = 'block';
+            document.getElementById('seccion-datos').style.display = 'none';
+            document.getElementById('seccion-pago').style.display = 'none';
+
             const contenedor = document.getElementById('lista-pago');
             const totalTxt = document.getElementById('total-final');
             contenedor.innerHTML = '';
             let total = 0;
             carrito.forEach((p, index) => {
-                contenedor.innerHTML += `
-                <div class="item-pago">
-                    <span>
-                        <button class="btn-eliminar" onclick="eliminarDelCarrito(${index})">✕</button>
-                        ${p.nombre}
-                    </span>
-                    <span>$${p.precio.toFixed(2)}</span>
-                </div>`;
+                contenedor.innerHTML += `<div class="item-pago"><span><button class="btn-eliminar" onclick="eliminarDelCarrito(${index})">✕</button>${p.nombre}</span><span>$${p.precio.toFixed(2)}</span></div>`;
                 total += p.precio;
             });
             totalTxt.innerText = `$${total.toFixed(2)}`;
+        }
+
+        function irADatosEnvio() {
+            if (carrito.length === 0) return;
+            document.getElementById('seccion-productos').style.display = 'none';
+            document.getElementById('seccion-datos').style.display = 'block';
+        }
+
+        function irAPago() {
+            const nombre = document.getElementById('nombre-cliente').value;
+            const direccion = document.getElementById('direccion-cliente').value;
+            const localidad = document.getElementById('localidad-cliente').value;
+
+            if (!nombre || !direccion || !localidad) {
+                alert("¡Señor cabra, complete los datos de envío!");
+                return;
+            }
+            document.getElementById('seccion-datos').style.display = 'none';
+            document.getElementById('seccion-pago').style.display = 'block';
+        }
+
+        function togglePago(tipo) {
+            if (tipo === 'tarjeta') {
+                document.getElementById('campos-tarjeta').style.display = 'block';
+                document.getElementById('campos-alias').style.display = 'none';
+            } else {
+                document.getElementById('campos-tarjeta').style.display = 'none';
+                document.getElementById('campos-alias').style.display = 'block';
+            }
         }
 
         function volver() {
@@ -418,58 +465,54 @@
         }
 
         function enviarPedido() {
-            if (carrito.length === 0) return;
+            const metodo = document.querySelector('input[name="pago"]:checked').value;
+            const nombre = document.getElementById('nombre-cliente').value;
+            const direccion = document.getElementById('direccion-cliente').value;
+            const localidad = document.getElementById('localidad-cliente').value;
             const pedidoText = carrito.map(p => p.nombre).join(", ");
             const totalText = document.getElementById('total-final').innerText;
+
+            let dataEnvio = { 
+                Nombre: nombre, 
+                Direccion: direccion, 
+                Localidad: localidad,
+                Pedido: pedidoText, 
+                Total: totalText,
+                Metodo_Pago: metodo
+            };
+
+            // Si es tarjeta, podrías agregar los últimos 4 números o el dato que necesites (OJO con la seguridad en Formspree)
+            if (metodo === "Tarjeta") {
+                dataEnvio.Info_Pago = "Tarjeta ingresada en web";
+            }
+
             fetch("https://formspree.io/f/xkovkvor", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ Pedido: pedidoText, Total: totalText })
+                body: JSON.stringify(dataEnvio)
             }).then(() => {
-                alert("🐐 ¡Pedido enviado! La cabra se pondrá en contacto.");
+                alert("🐐 ¡Pedido y pago recibidos! Gracias por elegir Cabrastore.");
                 carrito = [];
-                localStorage.removeItem('carrito_cabra'); // LIMPIAR AL TERMINAR
+                localStorage.removeItem('carrito_cabra');
                 location.reload();
             });
         }
+
+        window.onscroll = function () {
+            var header = document.getElementById("miHeader");
+            if (window.pageYOffset > 50) header.classList.add("retraido");
+            else header.classList.remove("retraido");
+        };
     </script>
-    <a href="https://wa.me/541166216695?text=Hola%20CabraStore!%20Tengo%20una%20consulta." class="btn-wsp"
-        target="_blank">
+
+    <a href="https://wa.me/541166216695" class="btn-wsp" target="_blank">
         <span class="tooltip-wsp">¿Dudas? Escribinos 🐐</span>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg">
     </a>
+
     <footer class="footer-cabra">
         <p>© 2026 CabraStore - Premium Trends</p>
-        <p class="legal-text">
-            CabraStore actúa como gestor de compras internacionales.
-            Al confirmar su pedido, procesamos la logística con proveedores globales
-            para garantizar la mejor calidad y tendencia en su puerta.
-        </p>
-        <div
-            style="background: #111; padding: 30px; border-radius: 15px; margin: 20px 0; max-width: 1300px; width: 100%;">
-            <h2 style="color: #fff; margin-bottom: 20px;">¿Por qué comprar en CabraStore? 🐐</h2>
-            <div style="display: flex; justify-content: space-around; flex-wrap: wrap; gap: 20px;">
-                <div style="max-width: 250px;">
-                    <p style="font-size: 24px;">🎯</p>
-                    <h4 style="margin: 5px 0;">Curaduría Pro</h4>
-                    <p style="font-size: 13px; color: #aaa;">Filtramos miles de productos para traerte solo lo que tiene
-                        calidad real.</p>
-                </div>
-                <div style="max-width: 250px;">
-                    <p style="font-size: 24px;">🛡️</p>
-                    <h4 style="margin: 5px 0;">Compra Segura</h4>
-                    <p style="font-size: 13px; color: #aaa;">Usamos nuestros métodos de pago internacionales para que no
-                        arriesgues tus datos.</p>
-                </div>
-                <div style="max-width: 250px;">
-                    <p style="font-size: 24px;">📲</p>
-                    <h4 style="margin: 5px 0;">Soporte Humano</h4>
-                    <p style="font-size: 13px; color: #aaa;">¿Dudas con la Aduana? Estamos con vos por WhatsApp en todo
-                        el proceso.</p>
-                </div>
-            </div>
-        </div>
+        <p class="legal-text">CabraStore actúa como gestor de compras internacionales...</p>
     </footer>
 </body>
-
 </html>
