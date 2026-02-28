@@ -150,12 +150,12 @@
 
         #btn-ver-carrito {
             position: absolute;
-            left: 20px;
+            right: 20px;
             top: 50%;
             transform: translateY(-50%);
             width: auto;
-            background: #0e386e;
-            color: white;
+            background: #ffffff;
+            color: rgb(0, 0, 0);
             padding: 20px 15px;
             border-radius: 5px;
             font-size: 14px;
@@ -226,8 +226,14 @@
             transition: transform 0.3s;
         }
 
-        .btn-wsp:hover { transform: scale(1.1); }
-        .btn-wsp img { width: 35px; height: 35px; }
+        .btn-wsp:hover {
+            transform: scale(1.1);
+        }
+
+        .btn-wsp img {
+            width: 35px;
+            height: 35px;
+        }
 
         .tooltip-wsp {
             visibility: hidden;
@@ -245,7 +251,10 @@
             font-size: 14px;
         }
 
-        .btn-wsp:hover .tooltip-wsp { visibility: visible; opacity: 1; }
+        .btn-wsp:hover .tooltip-wsp {
+            visibility: visible;
+            opacity: 1;
+        }
 
         .flying-img {
             position: fixed;
@@ -273,11 +282,17 @@
     <header id="miHeader">
         <h1 style="color: white; letter-spacing: 3px; transition: 0.4s;">CABRA STORE</h1>
         <nav style="display: flex; gap: 20px;">
-            <a href="#inicio" style="color: white; text-decoration: none; font-size: 12px; font-weight: bold;">INICIO</a>
-            <a href="#productos" style="color: white; text-decoration: none; font-size: 12px; font-weight: bold;">PRODUCTOS</a>
-            <a href="#como-funciona" style="color: #ff3e3e; text-decoration: none; font-size: 12px; font-weight: bold;">¿CÓMO FUNCIONA?</a>
+            <a href="#inicio"
+                style="color: white; text-decoration: none; font-size: 12px; font-weight: bold;">INICIO</a>
+            <a href="#productos"
+                style="color: white; text-decoration: none; font-size: 12px; font-weight: bold;">PRODUCTOS</a>
+            <a href="#como-funciona"
+                style="color: #ff3e3e; text-decoration: none; font-size: 12px; font-weight: bold;">¿CÓMO FUNCIONA?</a>
         </nav>
-        <button id="btn-ver-carrito" class="boton" onclick="mostrarCarrito()">🛒 Ver Carrito (<span id="count">0</span>)</button>
+        <button id="btn-ver-carrito" class="boton" onclick="mostrarCarrito()">
+            <img src="carrito.png" alt="Cabra" style="width: 25px; vertical-align: middle; margin-right: 5px;">
+            Ver Carrito (<span id="count">0</span>)
+        </button>
     </header>
 
     <div id="vista-tienda">
@@ -286,80 +301,123 @@
         </div>
         <div class="contenedor-productos">
             <div class="tarjeta-producto">
-                <div class="img-container"><img src="https://img.kwcdn.com/product/open/4be679235719417294f6fe46ef786275-goods.jpeg"></div>
+                <div class="img-container"><img
+                        src="https://img.kwcdn.com/product/open/4be679235719417294f6fe46ef786275-goods.jpeg"></div>
                 <div class="info-producto">
                     <h3>Street Dark</h3>
-                    <p>$18.50</p> 
-                    <button onclick="añadir('Street Dark', 18.50, 'https://img.kwcdn.com/product/open/4be679235719417294f6fe46ef786275-goods.jpeg', this)" class="boton">Añadir</button>
+                    <p>$20.000</p>
+                    <button
+                        onclick="añadir('Street Dark', 20000, 'https://img.kwcdn.com/product/open/4be679235719417294f6fe46ef786275-goods.jpeg', this)"
+                        class="boton">Añadir</button>
                 </div>
             </div>
             <div class="tarjeta-producto">
-                <div class="img-container"><img src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=400"></div>
+                <div class="img-container"><img
+                        src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=400"></div>
                 <div class="info-producto">
                     <h3>Basic Black</h3>
-                    <p>$15.00</p> 
-                    <button onclick="añadir('Basic Black', 15.00, 'https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=400', this)" class="boton">Añadir</button>
+                    <p>$15.00</p>
+                    <button
+                        onclick="añadir('Basic Black', 15.00, 'https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=400', this)"
+                        class="boton">Añadir</button>
                 </div>
             </div>
             <div class="tarjeta-producto">
-                <div class="img-container"><img src="https://img.kwcdn.com/product/fancy/d393fbdf-ba41-4c68-8909-a49b6d707050.jpg?w=800"></div>
+                <div class="img-container"><img
+                        src="https://img.kwcdn.com/product/fancy/d393fbdf-ba41-4c68-8909-a49b6d707050.jpg?w=800"></div>
                 <div class="info-producto">
                     <h3>Cyber Style</h3>
                     <p>$19.00</p>
-                    <button onclick="añadir('Cyber Style', 19.00, 'https://img.kwcdn.com/product/fancy/d393fbdf-ba41-4c68-8909-a49b6d707050.jpg?w=800', this)" class="boton">Añadir</button>
+                    <button
+                        onclick="añadir('Cyber Style', 19.00, 'https://img.kwcdn.com/product/fancy/d393fbdf-ba41-4c68-8909-a49b6d707050.jpg?w=800', this)"
+                        class="boton">Añadir</button>
                 </div>
             </div>
         </div>
     </div>
 
     <div id="vista-carrito">
-        <h1 style="font-size: 30px;">🛒 Tu Pedido</h1>
-        
+        <h1 style="font-size: 30px;"><img src="carritogris.png" alt="Cabra"
+                style="width: 40px; vertical-align: middle; margin-right: 5px;"> Tu Pedido</h1>
+
         <div id="seccion-productos">
             <div id="lista-pago" style="margin-bottom: 20px;"></div>
-            <h2 style="text-align: right; color: #ffffff; border-top: 1px solid #444; padding-top: 10px;">Total: <span id="total-final">$0</span></h2>
-            <button class="boton" style="background:#00e386; color:#000; margin-bottom: 10px;" onclick="irADatosEnvio()">CONFIRMAR PRODUCTOS 🚀</button>
+            <h2 style="text-align: right; color: #ffffff; border-top: 1px solid #444; padding-top: 10px;">Total: <span
+                    id="total-final">$0</span></h2>
+            <p id="aviso-minimo" style="color: #ff3e3e; font-size: 13px; text-align: right; margin-bottom: 10px;">
+                * Compra mínima: $20.000
+            </p>
+            <button class="boton" style="background:#ffffff; color:#000; margin-bottom: 10px;"
+                onclick="irADatosEnvio()">CONFIRMAR PRODUCTOS 🚀</button>
+
         </div>
 
-        <div id="seccion-datos" style="display: none; background: #111; padding: 20px; border-radius: 10px; margin-bottom: 20px; text-align: left;">
-            <h3 style="margin-top: 0; color: #00e386;">Datos de Entrega 🐐</h3>
-            <input type="text" id="nombre-cliente" placeholder="Nombre completo" style="width: 100%; padding: 10px; margin-bottom: 10px; background: #222; color: white; border: 1px solid #444; border-radius: 5px;">
-            <input type="text" id="direccion-cliente" placeholder="Dirección de envío" style="width: 100%; padding: 10px; margin-bottom: 10px; background: #222; color: white; border: 1px solid #444; border-radius: 5px;">
-            <input type="text" id="localidad-cliente" placeholder="Localidad / Ciudad" style="width: 100%; padding: 10px; background: #222; color: white; border: 1px solid #444; border-radius: 5px;">
-            <button class="boton" style="background:#00e386; color:#000; margin-top: 15px;" onclick="irAPago()">SIGUIENTE: MÉTODO DE PAGO 💳</button>
-        </div>
+        <div id="seccion-datos"
+            style="display: none; background: #111; padding: 20px; border-radius: 10px; margin-bottom: 20px; text-align: left;">
+            <h3 style="margin-top: 0; color: #ffffff;">Datos de Entrega 🐐</h3>
 
-        <div id="seccion-pago" style="display: none;">
-            <div class="metodo-pago-box">
-                <h3 style="margin-top: 0; color: #00e386;">Método de Pago 💳</h3>
-                <p style="font-size: 13px; color: #888;">Elegí cómo querés pagar tu pedido:</p>
-                
-                <div style="margin-bottom: 20px;">
-                    <label style="display: block; margin-bottom: 10px; font-weight: bold;">
-                        <input type="radio" name="pago" value="Tarjeta" checked onclick="togglePago('tarjeta')"> Pago con Tarjeta
-                    </label>
-                    <div id="campos-tarjeta">
-                        <input type="text" id="nro-tarjeta" placeholder="Número de tarjeta" style="width: 100%; padding: 10px; margin-bottom: 10px; background: #222; color: white; border: 1px solid #444; border-radius: 5px;">
-                        <div style="display: flex; gap: 10px;">
-                            <input type="text" id="venc-tarjeta" placeholder="MM/AA" style="width: 50%; padding: 10px; background: #222; color: white; border: 1px solid #444; border-radius: 5px;">
-                            <input type="text" id="cvv-tarjeta" placeholder="CVV" style="width: 50%; padding: 10px; background: #222; color: white; border: 1px solid #444; border-radius: 5px;">
-                        </div>
-                    </div>
-                </div>
+            <input type="text" id="nombre-cliente" placeholder="Nombre y apellido completo"
+                style="width: 100%; padding: 10px; margin-bottom: 10px; background: #222; color: white; border: 1px solid #444; border-radius: 5px;">
 
-                <hr style="border: 0; border-top: 1px solid #333; margin: 20px 0;">
+            <input type="text" id="provincia-ciudad" placeholder="Provincia / Ciudad"
+                style="width: 100%; padding: 10px; margin-bottom: 10px; background: #222; color: white; border: 1px solid #444; border-radius: 5px;">
 
-                <div>
-                    <label style="display: block; margin-bottom: 10px; font-weight: bold;">
-                        <input type="radio" name="pago" value="Transferencia" onclick="togglePago('transferencia')"> Transferencia / Alias
-                    </label>
-                    <div id="campos-alias" style="display: none; background: #222; padding: 15px; border-radius: 5px; border: 1px dashed #00e386;">
-                        <p style="margin: 0; font-size: 14px;">Alias: <strong>ricardo.noriega.mp</strong></p>
-                        <p style="margin: 5px 0 0 0; font-size: 12px; color: #aaa;">Enviá el comprobante por WhatsApp una vez finalizado.</p>
-                    </div>
-                </div>
+            <input type="text" id="codigo-postal" placeholder="Código Postal"
+                style="width: 100%; padding: 10px; margin-bottom: 10px; background: #222; color: white; border: 1px solid #444; border-radius: 5px;">
+
+            <input type="text" id="nombre-calle" placeholder="Nombre de la calle"
+                style="width: 100%; padding: 10px; margin-bottom: 10px; background: #222; color: white; border: 1px solid #444; border-radius: 5px;">
+
+            <input type="text" id="numero-casa" placeholder="Número de la casa"
+                style="width: 100%; padding: 10px; margin-bottom: 10px; background: #222; color: white; border: 1px solid #444; border-radius: 5px;">
+
+            <input type="text" id="dpto-piso" placeholder="Dpto. / Piso / caracteristicas (opcional)"
+                style="width: 100%; padding: 10px; margin-bottom: 10px; background: #222; color: white; border: 1px solid #444; border-radius: 5px;">
+
+            <input type="text" id="numero-telefono" placeholder="Número de telefono(p.ej 11 12345678)"
+                style="width: 100%; padding: 10px; margin-bottom: 10px; background: #222; color: white; border: 1px solid #444; border-radius: 5px;">
+
+            <div
+                style="background-color: rgba(103, 194, 58, 0.1); border: 1px solid #67c23a; border-radius: 5px; padding: 10px; margin-bottom: 10px; display: flex; align-items: center; gap: 8px;">
+                <span style="color: #67c23a; font-size: 14px;">✔️</span>
+                <p style="color: #67c23a; font-size: 11px; margin: 0; text-align: left; font-family: sans-serif;">
+                    La aduana de Argentina requiere CUIL/CUIT con clave fiscal nivel 2 para la autorización de paquetes.
+                    Tus datos estarán protegidos.
+                </p>
             </div>
-            <button class="boton" style="background:#00e386; color:#000; margin-bottom: 10px;" onclick="enviarPedido()">FINALIZAR COMPRA 🐐</button>
+
+            <input type="text" id="cuil-cliente" placeholder="Número de CUIL/CUIT (00-00000000-0)"
+                style="width: 100%; padding: 10px; background: #222; color: white; border: 1px solid #444; border-radius: 5px;">
+
+            <button class="boton" style="background:#ffffff; color:#000000; margin-top: 15px;"
+                onclick="irAPago()">SIGUIENTE: MÉTODO DE PAGO 💳</button>
+        </div>
+
+        <div id="seccion-pago"
+            style="display: none; background: #111; padding: 20px; border-radius: 10px; border: 1px solid #444; text-align: left;">
+            <h3 style="color: white; margin-top: 0; display: flex; align-items: center; gap: 10px;">
+                <img src="logo.png" alt="Cabra" style="width: 25px;"> Finalizá tu compra
+            </h3>
+
+            <p style="color: #888; font-size: 13px; margin-bottom: 20px;">
+                Para completar el pedido, realizá la transferencia al siguiente Alias. Una vez hecha, hacé clic en el
+                botón de abajo para enviarnos el comprobante por WhatsApp.
+            </p>
+
+            <div
+                style="background: #1a1a1a; padding: 15px; border-radius: 8px; border-left: 4px solid #67c23a; margin-bottom: 20px;">
+                <p style="color: white; margin: 5px 0; font-size: 14px;"><strong>Alias:</strong> <span
+                        style="color: #67c23a; letter-spacing: 1px;">TU.ALIAS.AQUÍ</span></p>
+                <p style="color: white; margin: 5px 0; font-size: 14px;"><strong>Titular:</strong> Tu Nombre o Empresa
+                </p>
+                <p style="color: white; margin: 5px 0; font-size: 14px;"><strong>Banco:</strong> Mercado Pago / Ualá /
+                    Banco</p>
+            </div>
+
+            <button class="boton" onclick="enviarWhatsApp()"
+                style="background: #67c23a; color: black; font-weight: bold; width: 100%; padding: 12px; border: none; border-radius: 5px; cursor: pointer;">
+                ENVIAR COMPROBANTE 🚀
+            </button>
         </div>
 
         <button id="btn-volver-tienda" class="boton" style="background:#333;" onclick="volver()">← Volver</button>
@@ -413,7 +471,7 @@
         function mostrarCarrito() {
             document.getElementById('vista-tienda').style.display = 'none';
             document.getElementById('vista-carrito').style.display = 'block';
-            
+
             // Resetear a paso 1
             document.getElementById('seccion-productos').style.display = 'block';
             document.getElementById('seccion-datos').style.display = 'none';
@@ -431,71 +489,69 @@
         }
 
         function irADatosEnvio() {
-            if (carrito.length === 0) return;
+            // 1. Calculamos el total actual del carrito
+            let totalCuel = 0;
+            carrito.forEach(p => {
+                totalCuel += p.precio;
+            });
+
+            // 2. Verificamos el mínimo (20000 pesos)
+            const MINIMO_COMPRA = 20000;
+
+            if (totalCuel < MINIMO_COMPRA) {
+                alert(`¡Atención señor cabra! El mínimo de compra es de $${MINIMO_COMPRA}. 
+Te faltan $${(MINIMO_COMPRA - totalCuel).toFixed(2)} para completar el pedido.`);
+                return; // Esto detiene la función y no deja avanzar
+            }
+
+            // 3. Si pasó el mínimo, permitimos avanzar
             document.getElementById('seccion-productos').style.display = 'none';
             document.getElementById('seccion-datos').style.display = 'block';
         }
 
         function irAPago() {
             const nombre = document.getElementById('nombre-cliente').value;
-            const direccion = document.getElementById('direccion-cliente').value;
-            const localidad = document.getElementById('localidad-cliente').value;
-
-            if (!nombre || !direccion || !localidad) {
-                alert("¡Señor cabra, complete los datos de envío!");
+            const provincia = document.getElementById('provincia-ciudad').value;
+            const codigo = document.getElementById('codigo-postal').value;
+            const calle = document.getElementById('nombre-calle').value;
+            const casa = document.getElementById('numero-casa').value;
+            const dpto = document.getElementById('dpto-piso').value;
+            const telefono = document.getElementById('numero-telefono').value;
+            if (!nombre || !provincia || !codigo || !calle || !casa || !telefono) {
+                alert("¡Por favor, el señor cabra requiere que completes todos los datos!");
                 return;
             }
+
             document.getElementById('seccion-datos').style.display = 'none';
             document.getElementById('seccion-pago').style.display = 'block';
         }
-
-        function togglePago(tipo) {
-            if (tipo === 'tarjeta') {
-                document.getElementById('campos-tarjeta').style.display = 'block';
-                document.getElementById('campos-alias').style.display = 'none';
-            } else {
-                document.getElementById('campos-tarjeta').style.display = 'none';
-                document.getElementById('campos-alias').style.display = 'block';
-            }
-        }
-
         function volver() {
             document.getElementById('vista-tienda').style.display = 'block';
             document.getElementById('vista-carrito').style.display = 'none';
         }
 
-        function enviarPedido() {
-            const metodo = document.querySelector('input[name="pago"]:checked').value;
+        function enviarWhatsApp() {
             const nombre = document.getElementById('nombre-cliente').value;
-            const direccion = document.getElementById('direccion-cliente').value;
-            const localidad = document.getElementById('localidad-cliente').value;
-            const pedidoText = carrito.map(p => p.nombre).join(", ");
-            const totalText = document.getElementById('total-final').innerText;
+            const provincia = document.getElementById('provincia-ciudad').value;
+            const codigo = document.getElementById('codigo-postal').value;
+            const calle = document.getElementById('nombre-calle').value;
+            const casa = document.getElementById('numero-casa').value;
+            const dpto = document.getElementById('dpto-piso').value;
+            const telefono = document.getElementById('numero-telefono').value;
+            const total = document.getElementById('total-final').innerText;
+            const listaProductos = carrito.map(p => `- ${p.nombre}`).join('\n');
 
-            let dataEnvio = { 
-                Nombre: nombre, 
-                Direccion: direccion, 
-                Localidad: localidad,
-                Pedido: pedidoText, 
-                Total: totalText,
-                Metodo_Pago: metodo
-            };
+            const mensaje = `¡Hola Cabra Store! \nSoy *${nombre}*. Acabo de transferir el total de *${total}*.\n\n*Detalle del pedido:*\n${listaProductos}\n\n*Datos de envío:*\n ${provincia}, ${calle}, ${casa}, ${dpto}\n\nAdjunto el comprobante abajo. `;
 
-            // Si es tarjeta, podrías agregar los últimos 4 números o el dato que necesites (OJO con la seguridad en Formspree)
-            if (metodo === "Tarjeta") {
-                dataEnvio.Info_Pago = "Tarjeta ingresada en web";
-            }
+            const miNumero = "541166216695";
+            const url = `https://wa.me/${miNumero}?text=${encodeURIComponent(mensaje)}`;
 
-            fetch("https://formspree.io/f/xkovkvor", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(dataEnvio)
-            }).then(() => {
-                alert("🐐 ¡Pedido y pago recibidos! Gracias por elegir Cabrastore.");
-                carrito = [];
-                localStorage.removeItem('carrito_cabra');
-                location.reload();
-            });
+            window.open(url, '_blank');
+
+            // --- AGREGÁ ESTO PARA LIMPIAR TODO ---
+            carrito = [];
+            localStorage.removeItem('carrito_cabra');
+            setTimeout(() => { location.reload(); }, 1000); // Recarga la página para volver al inicio
         }
 
         window.onscroll = function () {
@@ -515,4 +571,5 @@
         <p class="legal-text">CabraStore actúa como gestor de compras internacionales...</p>
     </footer>
 </body>
+
 </html>
